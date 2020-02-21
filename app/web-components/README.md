@@ -91,3 +91,24 @@ If you use a different folder you will need to make sure webpack/babel can handl
 
 - While working on my component I get the error `Failed to execute 'define' on 'CustomElementRegistry': the name "..." has already been used with this registry`
   => please see <a href="#user-content-setup-page-reload-via-hmr">Setup page reload via HMR</a>
+- When I first start the development server after a fresh install, I get an error about `lit-html`.
+  => Please install `lit-html` as a dev-dependency: `npm i -D lit-html`
+
+## How do I wrap stories with another component?
+
+Storybook allows you to wrap stories with "decorators". Storybook Web Components renders it's stories using lit-html, so you pass your Web Components to the `html` method.
+
+```js
+import { html } from "lit-html";
+import {
+  addDecorator,
+} from "@storybook/web-components";
+
+// Wrap all stories in the base component
+addDecorator(
+  storyFn =>
+    html`
+      <x-base>${storyFn()}</x-base>
+    `
+);
+```
